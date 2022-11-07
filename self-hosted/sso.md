@@ -118,3 +118,22 @@ REFRESH_TOKEN_COOKIE_SAME_SITE="None"
 
      await sdk.auth.refresh();
      ```
+
+### Testing Seamless SSO locally
+
+The above `REFRESH_TOKEN_*` configuration is not supposed to work for local testing. Indeed, both your local Directus instance and your local Web application may not use HTTPS on their domain, which is required to use secure cookies.
+
+For local testing purpose (**and only local testing purpose**), the following configuration can be used on `.env:
+
+```sh
+REFRESH_TOKEN_COOKIE_SECURE="false"
+REFRESH_TOKEN_COOKIE_SAME_SITE="lax"
+```
+
+Note that no `REFRESH_TOKEN_COOKIE_DOMAIN` value is set.
+
+::: warning Disabling secured cookies
+
+The configuration disables secured cookies and should only be used in local environment. Using it in production expose your service to CSRF attacks.
+
+:::
