@@ -464,6 +464,25 @@ query {
 }
 ```
 
+::: warning Deep aggregations with MySQL & PostgreSQL databases
+
+Using deep aggregations with MySQL or PostgreSQL databases requires including deep `group` and deep `sort` too, for the correctness of the formed SQL query under the hood.\
+For example, when listing articles with multiple authors, deep aggregation on authors would be:
+
+```
+{
+	"authors": {
+		"_aggregate": { count: 'id' },
+		"_groupBy": ['article_id'],
+		_sort: 'article_id',
+	}
+}
+```
+
+where `article_id` is the article foreign key in the junction table.
+
+:::
+
 ---
 
 ## Aliases
